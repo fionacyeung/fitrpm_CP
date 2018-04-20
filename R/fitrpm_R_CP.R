@@ -53,6 +53,7 @@ library(abind)
 library(nloptr)
 library(numDeriv)
 library(MASS)
+library(Matrix)
 
 fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, control){
 
@@ -108,7 +109,8 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, control){
     }
     
     # order the data by pair
-    Xtype_paired = Xtype[unlist(apply(mu, 2, function(x) which(x>0)))]
+    # Xtype_paired = Xtype[unlist(apply(mu, 2, function(x) which(x>0)))] # for regular matrix
+    Xtype_paired = Xtype[mu@i+1] # for sparse matrix
     Ztype_paired = Ztype[as.logical(colSums(mu))]
     
     Xtype_single = table(Xtype[!rowSums(mu)])
