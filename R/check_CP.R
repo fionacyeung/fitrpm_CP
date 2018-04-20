@@ -29,10 +29,7 @@
 #' 
 check_CP_latent = function(ff, theta, mu, X, Z, symmetric){
   
-  
-  num_single_women = nrow(modelmat$X) - sum(rowSums(mu)) 
-  num_single_men = nrow(modelmat$Z) - sum(colSums(mu)) 
-  n=nrow(modelmat$X)+nrow(modelmat$Z)
+  n=nrow(X)+nrow(Z)
   
   Xdata <- cbind(1, X)
   Zdata <- cbind(1, Z)
@@ -68,7 +65,8 @@ check_CP_latent = function(ff, theta, mu, X, Z, symmetric){
   }
   
   # order the data by pair
-  Xtype_paired = Xtype[unlist(apply(mu, 2, function(x) which(x>0)))]
+  # Xtype_paired = Xtype[unlist(apply(mu, 2, function(x) which(x>0)))] # for regular matrix
+  Xtype_paired = Xtype[mu@i+1] # for sparse matrix
   Ztype_paired = Ztype[as.logical(colSums(mu))]
   
   Xtype_single = table(Xtype[!rowSums(mu)])
