@@ -47,7 +47,9 @@ check_CP_latent = function(ff, theta, mu, X, Z, symmetric){
   # 2) get the subset of the variables that are relevant according to the formula
   # Define the variables used in the model (and hence the unique classes of partners)
   # This is typically a subset of the available variables
-  model_vars <- c("Int", unlist(unique(lapply(model.terms.coef.names, '[[', 1))))
+  # model_vars <- c("Int", unlist(unique(lapply(model.terms.coef.names, '[[', 1))))
+  model_vars <- c("Int", unique(unlist(model.terms.coef.names)))
+  model_vars = model_vars[model_vars %in% colnames(Xdata)]
 
   Xu <- unique(Xdata[,model_vars])
   Xu <- Xu[do.call(order, as.data.frame(Xu)),]

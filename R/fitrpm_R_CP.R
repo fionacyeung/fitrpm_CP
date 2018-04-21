@@ -86,7 +86,9 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, control){
     # 2) get the subset of the variables that are relevant according to the formula
     # Define the variables used in the model (and hence the unique classes of partners)
     # This is typically a subset of the available variables
-    model_vars <- c("Int", unlist(unique(lapply(model.terms.coef.names, '[[', 1))))
+    #model_vars <- c("Int", unlist(unique(lapply(model.terms.coef.names, '[[', 1))))
+    model_vars <- c("Int", unique(unlist(model.terms.coef.names)))
+    model_vars = model_vars[model_vars %in% colnames(Xdata)]
     
     
     # 3) Compute the marginal distributions of women's and men's types
