@@ -134,7 +134,28 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, control){
     } else if (sampling == "HOUSEHOLD") {
       
       pmfj = matrix(0,nrow=1+num_Xu, ncol=1+num_Zu) # women (X) indexed by row, men (Z) indexed by column
-      pmfj[1:num_Xu,1:num_Zu] = unclass(table(Xtype_paired,Ztype_paired))
+      
+      # pmfj[1:num_Xu,1:num_Zu] = unclass(table(Xtype_paired,Ztype_paired))
+      
+      # account for types of pairs that are not observed
+      tmp = unclass(table(Xtype_paired,Ztype_paired))
+      pmfj[1:nrow(tmp),1:ncol(tmp)] = tmp
+      # missing rows
+      idx = which(!((1:num_Xu) %in% rownames(tmp)))
+      if (length(idx)>0) {
+        for (ii in 1:length(idx)) {
+          pmfj[(idx[ii]+1):(nrow(tmp)+ii),1:ncol(tmp)]= pmfj[idx[ii]:(nrow(tmp)+ii-1),1:ncol(tmp)]
+          pmfj[idx[ii],] = 0
+        }
+      }
+      # missing cols
+      idx = which(!((1:num_Zu) %in% colnames(tmp)))
+      if (length(idx)>0) {
+        for (ii in 1:length(idx)) {
+          pmfj[,(idx[ii]+1):(ncol(tmp)+ii)]= pmfj[,idx[ii]:(ncol(tmp)+ii-1)]
+          pmfj[,idx[ii]] = 0
+        }
+      }
       
       if (length(Xtype_single) > 0) {
         pmfj[1:num_Xu,1+num_Zu] = Xtype_single
@@ -149,7 +170,28 @@ fitrpm_R_CP <- function(formula, mu, Xdata, Zdata, theta_0=NULL, control){
     } else { # assume "INDIV"
       
       pmfj = matrix(0,nrow=1+num_Xu, ncol=1+num_Zu) # women (X) indexed by row, men (Z) indexed by column
-      pmfj[1:num_Xu,1:num_Zu] = unclass(table(Xtype_paired,Ztype_paired)) *2
+      
+      # pmfj[1:num_Xu,1:num_Zu] = unclass(table(Xtype_paired,Ztype_paired)) *2
+      tmp = unclass(table(Xtype_paired,Ztype_paired)) *2
+      pmfj[1:nrow(tmp),1:ncol(tmp)] = tmp
+      
+      # account for types of pairs that are not observed
+      # missing rows
+      idx = which(!((1:num_Xu) %in% rownames(tmp)))
+      if (length(idx)>0) {
+        for (ii in 1:length(idx)) {
+          pmfj[(idx[ii]+1):(nrow(tmp)+ii),1:ncol(tmp)]= pmfj[idx[ii]:(nrow(tmp)+ii-1),1:ncol(tmp)]
+          pmfj[idx[ii],] = 0
+        }
+      }
+      # missing cols
+      idx = which(!((1:num_Zu) %in% colnames(tmp)))
+      if (length(idx)>0) {
+        for (ii in 1:length(idx)) {
+          pmfj[,(idx[ii]+1):(ncol(tmp)+ii)]= pmfj[,idx[ii]:(ncol(tmp)+ii-1)]
+          pmfj[,idx[ii]] = 0
+        }
+      }
       
       if (length(Xtype_single) > 0) {
         pmfj[1:num_Xu,1+num_Zu] = Xtype_single
