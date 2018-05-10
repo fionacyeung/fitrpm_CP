@@ -1,4 +1,4 @@
-This is an R package to estimate revealed preferences based on observed matchings in large bipartite graphs (large two-sided markets). The estimation for one-to-one matching uses a logit model with latent opportunity sets, where the Independence of Irrelevant Alternatives (IIA) assumption is satisfied. The estimation method is based on Menzel (2015).
+This is an R package to estimate revealed preferences based on observed matchings in large bipartite graphs (large two-sided markets). The estimation for one-to-one matching uses a logit model with latent opportunity sets, where the Independence of Irrelevant Alternatives (IIA) assumption is satisfied. The estimation method is a re-parameterization of Menzel's model (Menzel 2015).
 
 Dependencies: abind, nloptr, numDeriv, MASS
 
