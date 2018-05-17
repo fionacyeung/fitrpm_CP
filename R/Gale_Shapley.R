@@ -5,13 +5,13 @@
 #' @param U The utility matrix for the women's side. Each row is a woman, each column is a man.
 #' The matrix entry (i,j) is the utility that woman \code{i} gains from pairing with man \code{j}. 
 #' In other words, the utility is computed from woman \code{i}'s perspective.
-#' @param V The utility matrix for the men's side. Each row is a man, each column is a woman.
-#' The matrix entry (i,j) is the utility that man \code{i} gains from pairing with woman \code{j}. 
-#' In other words, the utility is computed from man \code{i}'s perspective.
+#' @param V The utility matrix for the men's side. Each column is a man, each row is a woman.
+#' The matrix entry (i,j) is the utility that man \code{j} gains from pairing with woman \code{i}. 
+#' In other words, the utility is computed from man \code{j}'s perspective.
 #' @return This function returns the following matrix: 
 #' \item{mu}{The matching matrix, where 1 represents a pairing, 0 otherwise. 
 #' Each row is a woman, each column is a man. The order of the rows is the same as the 
-#' rows in \code{U}. The order of the columns is the same as the rows in \code{V}.}
+#' rows in \code{U}. The order of the columns is the same as the columns in \code{V}.}
 #' @seealso fitrpm_R_CP
 #' @references Menzel, Konrad (2015).
 #' \emph{Large Matching Markets as Two-Sided Demand Systems}
