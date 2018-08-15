@@ -118,8 +118,10 @@ create_counterfactual_distri = function(ff, theta, mu, X, Z, Xnew, Znew, symmetr
   Xtype_paired = Xtype[mu@i+1] # for sparse matrix
   Ztype_paired = Ztype[as.logical(colSums(mu))]
   
-  Xtype_single = table(Xtype[!rowSums(mu)])
-  Ztype_single = table(Ztype[!colSums(mu)])
+  # Xtype_single = table(Xtype[!rowSums(mu)])
+  # Ztype_single = table(Ztype[!colSums(mu)])
+  Xtype_single = table(factor(Xtype[!rowSums(mu)], 1:nrow(Xu))) # account for missing types
+  Ztype_single = table(factor(Ztype[!colSums(mu)], 1:nrow(Zu))) # account for missing types
   
   pmfW=table(Xtype)/nrow(mu)
   pmfM=table(Ztype)/ncol(mu)
