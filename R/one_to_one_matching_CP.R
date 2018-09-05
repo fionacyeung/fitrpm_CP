@@ -295,7 +295,7 @@ if (symmetric) {
   beta_all_df$beta[beta_all_df$beta == "beta.6"] = "beta.3"
   # see http://r.789695.n4.nabble.com/ggplot2-facet-grid-with-different-vertical-lines-on-each-facet-td3034783.html and
   # https://stackoverflow.com/questions/11846295/how-to-add-different-lines-for-facets
-  hline.dat = data.frame(beta=paste0("beta.",rep(1:3,times=2)), Coeff=beta_wt, agent.type=c(rep("female",3), rep("male",3)))
+  hline.dat = data.frame(beta=paste0("beta.",rep(1:3,times=2)), Coeff=c(beta_wt, beta_mt), agent.type=c(rep("female",3), rep("male",3)))
   
   
   beta_all_df_sub = subset(beta_all_df, Coeff < 3)
